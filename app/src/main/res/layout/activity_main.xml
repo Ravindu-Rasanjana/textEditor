@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,44 +8,50 @@
     <EditText
         android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="628dp"
         android:layout_weight="1"
-        android:hint="Write your code here..."
-        android:gravity="start|top"
         android:background="@android:color/white"
-        android:textSize="16sp"
+        android:fontFamily="monospace"
+        android:gravity="start|top"
+        android:hint="Write your code here..."
         android:inputType="textMultiLine"
+        android:maxLines="1000"
+        android:minLines="15"
+        android:overScrollMode="always"
+        android:padding="8dp"
         android:scrollbars="vertical"
         android:textColor="@android:color/black"
         android:textColorHint="#888"
-        android:overScrollMode="always"
-        android:padding="8dp"
-        android:fontFamily="monospace"
-        android:maxLines="1000"
-        android:minLines="15" />
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Create a file"
             android:text="New" />
 
         <Button
             android:id="@+id/btnOpen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Open a file"
             android:text="Open" />
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Save a file"
             android:text="Save" />
 
     </LinearLayout>
