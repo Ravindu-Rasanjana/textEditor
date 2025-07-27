@@ -21,8 +21,6 @@
         android:textColorHint="#888"
         android:overScrollMode="always"
         android:padding="8dp"
-        android:verticalScrollBarEnabled="true"
-        android:gravity="top"
         android:fontFamily="monospace"
         android:maxLines="1000"
         android:minLines="15" />
