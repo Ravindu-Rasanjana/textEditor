@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import java.io.*
+import android.widget.ImageButton
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,15 +20,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
-        editor = findViewById(R.id.editor)
+        editor = findViewById(R.id.editText)
 
-        findViewById<Button>(R.id.btnOpen).setOnClickListener {
+        findViewById<ImageButton>(R.id.btnOpen).setOnClickListener {
             openFile()
         }
 
-        findViewById<Button>(R.id.btnSave).setOnClickListener {
+        findViewById<ImageButton>(R.id.btnSave).setOnClickListener {
             if (currentUri != null) {
                 saveToUri(currentUri!!)
             } else {
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.btnNew).setOnClickListener {
+        findViewById<ImageButton>(R.id.btnNew).setOnClickListener {
             editor.setText("")
             currentUri = null
         }
