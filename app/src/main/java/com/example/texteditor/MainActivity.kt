@@ -20,9 +20,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
-        editor = findViewById(R.id.editor)
+        editor = findViewById(R.id.editText)
 
         findViewById<ImageButton>(R.id.btnOpen).setOnClickListener {
             openFile()

@@ -1,76 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
     android:orientation="vertical"
+    android:background="#111111"
     android:padding="16dp">
 
-    <!-- Top bar with title and icons -->
+    <!-- Top Row: Action Icons -->
+
+    <!-- File Name Display -->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_height="53dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvFileName"
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="File Name"
-            android:textColor="#F0EAEA"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <!-- New File Icon -->
         <ImageButton
             android:id="@+id/btnNew"
-            android:layout_width="47dp"
-            android:layout_height="50dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="34dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
             android:contentDescription="New File"
             android:src="@drawable/ic_new_file"
-            android:tint="#F0EAEA" />
+            android:tint="@android:color/white" />
 
-        <!-- Open File Icon -->
         <ImageButton
             android:id="@+id/btnOpen"
-            android:layout_width="49dp"
-            android:layout_height="50dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="34dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
             android:contentDescription="Open File"
             android:src="@drawable/ic_open_file"
-            android:tint="#F0EAEA" />
+            android:tint="@android:color/white" />
 
-        <!-- Save File Icon -->
         <ImageButton
             android:id="@+id/btnSave"
-            android:layout_width="46dp"
-            android:layout_height="50dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="34dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
             android:contentDescription="Save File"
             android:src="@drawable/ic_save_file"
-            android:tint="#F0EAEA" />
+            android:tint="@android:color/white" />
     </LinearLayout>
 
-    <!-- Code editor area -->
+    <TextView
+        android:id="@+id/tvFileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Untitled.txt"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Text Editor Area -->
     <EditText
-        android:id="@+id/editor"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="861dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/bg_editor"
-        android:fontFamily="monospace"
-        android:gravity="start|top"
         android:hint="Enter text here..."
-        android:inputType="textMultiLine"
-        android:maxLines="1000"
-        android:minLines="15"
-        android:overScrollMode="always"
-        android:padding="12dp"
-        android:scrollbars="vertical"
         android:textColor="#000000"
         android:textColorHint="#888888"
-        android:textSize="16sp" />
+        android:background="@drawable/rounded_edit_text"
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:overScrollMode="always" />
 </LinearLayout>
