@@ -16,11 +16,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.texteditor.ui.theme.TextEditorTheme
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+
+// Kotlin keywords to highlight
+private val keywords = listOf(
+    "package", "import", "class", "fun", "val", "var", "if", "else", "when",
+    "for", "while", "do", "return", "null", "true", "false", "object",
+    "interface", "is", "in", "as", "break", "continue", "this", "super",
+    "try", "catch", "finally", "throw", "override", "public", "private",
+    "protected", "internal", "lateinit", "data", "sealed", "const", "inline",
+    "reified", "typealias", "operator", "suspend"
+)
+
+// Regex patterns for syntax parts
+private val keywordPattern = "\\b(${keywords.joinToString("|")})\\b".toRegex()
+private val stringPattern = "\"(\\\\.|[^\"\\\\])*\"".toRegex() // Double quoted strings
+private val commentPattern = "//.*?$|/\\*.*?\\*/".toRegex(setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.MULTILINE))
 
 class MainActivity : ComponentActivity() {
 
@@ -107,6 +126,40 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Helper function to build the highlighted AnnotatedString
+private fun buildHighlightedCode(code: String): AnnotatedString {
+    val builder = AnnotatedString.Builder(code)
+
+    // Apply comment style
+    commentPattern.findAll(code).forEach { match ->
+        builder.addStyle(
+            SpanStyle(color = Color(0xFF6A9955)),
+            start = match.range.first,
+            end = match.range.last + 1
+        )
+    }
+
+    // Apply string style
+    stringPattern.findAll(code).forEach { match ->
+        builder.addStyle(
+            SpanStyle(color = Color(0xFFD69D85)),
+            start = match.range.first,
+            end = match.range.last + 1
+        )
+    }
+
+    // Apply keyword style
+    keywordPattern.findAll(code).forEach { match ->
+        builder.addStyle(
+            SpanStyle(color = Color(0xFF569CD6), fontWeight = FontWeight.Bold),
+            start = match.range.first,
+            end = match.range.last + 1
+        )
+    }
+
+    return builder.toAnnotatedString()
+}
+
 @Composable
 fun EditorScreen(
     textState: MutableState<String>,
@@ -115,6 +168,8 @@ fun EditorScreen(
     onOpen: () -> Unit,
     onSave: () -> Unit
 ) {
+    val scrollState = rememberScrollState()  // Declare scrollState here
+
     val wordCount = textState.value.trim()
         .split("\\s+".toRegex())
         .filter { it.isNotEmpty() }
@@ -178,7 +233,7 @@ fun EditorScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Text editor
+        // Text editor with syntax highlighting and synchronized scrolling
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -186,12 +241,23 @@ fun EditorScreen(
                 .background(Color.White)
                 .padding(16.dp)
                 .imePadding()
+                .verticalScroll(scrollState)  // Apply vertical scroll here
         ) {
+            Text(
+                text = buildHighlightedCode(textState.value),
+                style = TextStyle(fontSize = 16.sp, color = Color.Black),
+                modifier = Modifier.fillMaxWidth()
+            )
+
             BasicTextField(
                 value = textState.value,
                 onValueChange = { textState.value = it },
-                textStyle = TextStyle(color = Color.Black, fontSize = 16.sp)
+                textStyle = TextStyle(fontSize = 16.sp, color = Color.Transparent),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Transparent)
             )
         }
     }
 }
+
