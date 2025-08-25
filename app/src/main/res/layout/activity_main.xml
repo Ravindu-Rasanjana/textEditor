@@ -16,8 +16,35 @@
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_marginBottom="8dp"
-        android:gravity="end"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btnUndo"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="Undo"
+            android:src="@drawable/ic_undo"
+            android:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btnRedo"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:tint="@android:color/white"
+            android:contentDescription="Redo"
+            android:src="@drawable/ic_redo" />
+
+        <ImageButton
+            android:id="@+id/btnFindReplace"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:tint="@android:color/white"
+            android:contentDescription="Find and Replace"
+            android:src="@drawable/ic_find_replace" />
 
         <ImageButton
             android:id="@+id/btnNew"
@@ -62,19 +89,33 @@
             android:src="@drawable/ic_play_arrow"
             android:tint="@android:color/white"
             tools:ignore="UseAppTint" />
+
+
     </LinearLayout>
+
+
+    <!-- Word Count Text -->
+
+    <!-- Text Editor Area -->
 
     <TextView
         android:id="@+id/tvFileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Untitled.txt"
         android:textColor="@android:color/white"
-        android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textStyle="bold" />
 
-    <!-- Text Editor Area -->
+    <TextView
+        android:id="@+id/wordCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Words: 0  Characters: 0"
+        android:textColor="@android:color/white" />
+
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"

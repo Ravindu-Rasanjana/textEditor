@@ -23,6 +23,9 @@ import android.view.View
 import android.widget.TextView
 import java.util.regex.Pattern
 
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+
 
 class SyntaxHighlighter(private val context: Context) {
 
@@ -271,7 +274,53 @@ class SyntaxHighlighter(private val context: Context) {
     }
 }
 
+class UndoRedoHelper(private val editText: EditText) { // Undo/Redo helper
+    private val undoStack = ArrayDeque<String>()
+    private val redoStack = ArrayDeque<String>()
+    private var isUndoOrRedo = false
+
+    init {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (!isUndoOrRedo) {
+                    undoStack.addFirst(s.toString())  // <-- changed from push()
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    fun undo() { // Undo
+        if (undoStack.isNotEmpty()) {
+            val text = undoStack.removeFirst()  // <-- changed from pop()
+            redoStack.addFirst(editText.text.toString())  // <-- changed from push()
+            isUndoOrRedo = true
+            editText.setText(text)
+            editText.setSelection(text.length)
+            isUndoOrRedo = false
+        }
+    }
+
+    fun redo() { // Redo
+        if (redoStack.isNotEmpty()) {
+            val text = redoStack.removeFirst()  // <-- changed from pop()
+            undoStack.addFirst(editText.text.toString())  // <-- changed from push()
+            isUndoOrRedo = true
+            editText.setText(text)
+            editText.setSelection(text.length)
+            isUndoOrRedo = false
+        }
+    }
+}
+ //new end
+
+
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var undoRedoHelper: UndoRedoHelper // for UndoRedo
+    private lateinit var wordCountText: TextView // For word count
 
     private lateinit var editor: EditText
     private lateinit var syntaxHighlighter: SyntaxHighlighter
@@ -295,6 +344,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         editor = findViewById(R.id.editText)
+        undoRedoHelper = UndoRedoHelper(editor) //new
+        wordCountText = findViewById(R.id.wordCountText) //new
         fileNameTextView = findViewById(R.id.tvFileName)
         compileButton = findViewById(R.id.btnCompile)
         outputSlider = findViewById(R.id.outputSlider)
@@ -311,6 +362,12 @@ class MainActivity : AppCompatActivity() {
                 val fileName = fileNameTextView.text.toString()
                 syntaxHighlighter.applySyntaxHighlighting(editor, fileName)
                 editor.addTextChangedListener(this)
+
+                val text = s.toString() //new start (for word count)
+                val wordCount = if (text.trim().isEmpty()) 0 else text.trim().split("\\s+".toRegex()).size
+                val charCount = text.length
+                wordCountText.text = "Words: $wordCount  Characters: $charCount" //new finish
+
             }
         })
 
@@ -336,6 +393,20 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.btnCompile).setOnClickListener {
             toggleOutputSlider()
         }
+
+        findViewById<ImageButton>(R.id.btnUndo).setOnClickListener { //new Undo
+            undoRedoHelper.undo()
+        }
+
+        findViewById<ImageButton>(R.id.btnRedo).setOnClickListener { //new Redo
+            undoRedoHelper.redo()
+        }
+
+        findViewById<ImageButton>(R.id.btnFindReplace).setOnClickListener { //new Find and Replace
+            showFindReplaceDialog()
+        }
+
+
     }
 
     private fun openFile() {
@@ -515,6 +586,47 @@ class MainActivity : AppCompatActivity() {
             }, 3000)
         }
     }
+
+    private fun showFindReplaceDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_find_replace, null)
+        val etFind = dialogView.findViewById<EditText>(R.id.etFind)
+        val etReplace = dialogView.findViewById<EditText>(R.id.etReplace)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Find & Replace")
+            .setView(dialogView)
+            .setPositiveButton("Replace All") { _, _ ->
+                val findText = etFind.text.toString()
+                val replaceText = etReplace.text.toString()
+                if (findText.isNotEmpty()) {
+                    val updated = editor.text.toString().replace(findText, replaceText)
+                    editor.setText(updated)
+                }
+            }
+            .setNeutralButton("Find Next") { _, _ ->
+                val findText = etFind.text.toString()
+                val start = editor.selectionEnd
+                val index = editor.text.toString().indexOf(findText, start, ignoreCase = true)
+                if (index != -1) {
+                    editor.requestFocus()
+                    editor.setSelection(index, index + findText.length)
+                } else {
+                    Toast.makeText(this, "No more matches", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.show()
+
+        // 🎨 Make all 3 buttons yellow
+        val yellow = ContextCompat.getColor(this, R.color.yellow)
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(yellow)
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(yellow)
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(yellow)
+    }
+
+
 
     private fun readTextFromUri(uri: Uri): String {
         return contentResolver.openInputStream(uri)?.bufferedReader().use { it?.readText() } ?: ""
