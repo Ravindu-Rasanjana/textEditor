@@ -1,0 +1,44 @@
+<resources>
+    <string-array name="kotlin_keywords">
+        <item>fun</item>
+        <item>val</item>
+        <item>var</item>
+        <item>class</item>
+        <item>if</item>
+        <item>else</item>
+        <item>for</item>
+        <item>while</item>
+        <item>return</item>
+        <item>when</item>
+        <!-- Add more Kotlin keywords -->
+    </string-array>
+
+    <string-array name="java_keywords">
+        <item>public</item>
+        <item>private</item>
+        <item>protected</item>
+        <item>class</item>
+        <item>void</item>
+        <item>int</item>
+        <item>if</item>
+        <item>else</item>
+        <item>for</item>
+        <item>while</item>
+        <item>return</item>
+        <!-- Add more Java keywords -->
+    </string-array>
+
+    <string-array name="python_keywords">
+        <item>def</item>
+        <item>class</item>
+        <item>if</item>
+        <item>else</item>
+        <item>elif</item>
+        <item>for</item>
+        <item>while</item>
+        <item>return</item>
+        <item>import</item>
+        <item>from</item>
+        <!-- Add more Python keywords -->
+    </string-array>
+</resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,7 +27,8 @@
             android:background="@android:color/transparent"
             android:contentDescription="New File"
             android:src="@drawable/ic_new_file"
-            android:tint="@android:color/white" />
+            android:tint="@android:color/white"
+            tools:ignore="UseAppTint" />
 
         <ImageButton
             android:id="@+id/btnOpen"
@@ -36,7 +38,8 @@
             android:background="@android:color/transparent"
             android:contentDescription="Open File"
             android:src="@drawable/ic_open_file"
-            android:tint="@android:color/white" />
+            android:tint="@android:color/white"
+            tools:ignore="UseAppTint" />
 
         <ImageButton
             android:id="@+id/btnSave"
@@ -46,7 +49,19 @@
             android:background="@android:color/transparent"
             android:contentDescription="Save File"
             android:src="@drawable/ic_save_file"
-            android:tint="@android:color/white" />
+            android:tint="@android:color/white"
+            tools:ignore="UseAppTint" />
+
+        <ImageButton
+            android:id="@+id/btnCompile"
+            android:layout_width="34dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Compile Code"
+            android:src="@drawable/ic_play_arrow"
+            android:tint="@android:color/white"
+            tools:ignore="UseAppTint" />
     </LinearLayout>
 
     <TextView
@@ -74,4 +89,39 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:overScrollMode="always" />
+
+    <!-- Output Slider (Hidden by default) -->
+    <LinearLayout
+        android:id="@+id/outputSlider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edit_text"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Output:"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/outputText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Click compile to see output..."
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:gravity="start|top"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
 </LinearLayout>
