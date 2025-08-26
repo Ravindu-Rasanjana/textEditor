@@ -378,10 +378,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.btnSave).setOnClickListener {
             if (currentUri != null) {
                 saveToUri(currentUri!!)
+                Toast.makeText(this, "File saved successfully!", Toast.LENGTH_SHORT).show()
             } else {
                 saveFile()
+                // Can't show toast here yet because file is not created
             }
         }
+
 
         findViewById<ImageButton>(R.id.btnNew).setOnClickListener {
             editor.setText("")
@@ -483,13 +486,16 @@ class MainActivity : AppCompatActivity() {
                         val fileName = getFileNameFromUri(uri)
                         fileNameTextView.text = fileName
                         saveToUri(uri)
-                    }
 
+                        // Toast
+                        Toast.makeText(this, "File saved successfully!", Toast.LENGTH_SHORT).show()
+                    }
                     else -> {}
                 }
             }
         }
     }
+
 
     private fun getFileNameFromUri(uri: Uri): String {
         // Try to get display name first
