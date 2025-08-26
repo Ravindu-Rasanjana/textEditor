@@ -35,7 +35,7 @@ class SyntaxHighlighter(private val context: Context) {
     private val commentColor = ContextCompat.getColor(context, android.R.color.darker_gray)       // Comments: gray
     private val numberColor = ContextCompat.getColor(context, android.R.color.holo_orange_dark)   // Numbers: dark orange
     private val functionColor = ContextCompat.getColor(context, android.R.color.holo_purple)      // Functions: purple
-    private val operatorColor = ContextCompat.getColor(context, android.R.color.black)            // Operators: black for clarity
+    private val operatorColor = ContextCompat.getColor(context, android.R.color.white)            // Operators: black for clarity
 
 
     fun applySyntaxHighlighting(editText: EditText, fileName: String) {
