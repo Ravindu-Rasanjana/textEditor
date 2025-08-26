@@ -116,22 +116,23 @@
         android:text="Words: 0  Characters: 0"
         android:textColor="@android:color/white" />
 
+    <!-- Output Slider (Hidden by default) -->
+
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/rounded_edit_text"
+        android:gravity="start|top"
         android:hint="Enter text here..."
+        android:inputType="textMultiLine"
+        android:overScrollMode="always"
+        android:padding="16dp"
         android:textColor="#000000"
         android:textColorHint="#888888"
-        android:background="@drawable/rounded_edit_text"
-        android:padding="16dp"
-        android:textSize="16sp"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:overScrollMode="always" />
+        android:textSize="16sp" />
 
-    <!-- Output Slider (Hidden by default) -->
     <LinearLayout
         android:id="@+id/outputSlider"
         android:layout_width="match_parent"
